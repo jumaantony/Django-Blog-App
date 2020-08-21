@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'django.contrib.postgres',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -82,8 +83,13 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django3',
+        'USER': 'django3',
+        'PASSWORD': 'django-3',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'OPTIONS': {'connect_timeout': 2},
     }
 }
 
