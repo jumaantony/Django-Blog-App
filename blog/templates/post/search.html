@@ -15,11 +15,12 @@
         {% for post in results %}
             <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
 
-            {{ post.body|linebreaks|truncatewords_html:5 }}
+            <p>
+                {{ post.body | markdown | truncatewords_html:10 }}
+            </p>
             
         {% empty %}
-            <p>there are no results for your query</p>
-        
+        <p> There are no results for your query </p>
         {% endfor %}
         <p><a href="{% url 'blog:post_search' %}"> Search Again </a></p>
 

@@ -9,7 +9,7 @@ from taggit.models import Tag
 from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.contrib.postgres.search import SearchVector
-from blog.models import Post
+
 
 
 # Create your views here.
@@ -139,9 +139,9 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            results = Post.published.annotate(
-                search = SearchVector('title', 'body',)
+            results = Post.published.annotate( 
+                search = SearchVector('title', 'body'),
             ).filter(search = query)
     return render(request, 'post/search.html', {'form': form,
                                                 'query': query,
-                                                'result': results})
+                                                'results': results})

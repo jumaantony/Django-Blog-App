@@ -36,38 +36,14 @@
             </p>
             {{ comment.body|linebreaks }}
         </div>
-    {% empty %}
-        <p>There are no comments yet.</p>
-    {% endfor %}
-
-    {% if new_comment %}
-        <h2>Your comment has been added.</h2>
-    {% else %}
-        <h2>Add a new comment</h2>
-        <form method="post">
-            {{ comment_form.as_p }}
-            {% csrf_token %}
-            <p>
-                <input type="submit" value="Add comment">
-            </p>
-        </form>
-        {% for comment in comments %}
-            <div class="nested-comment">
-
-                <p class="info">
-                    {{ comment.name }} | {{ comment.created }}
-                </p>
-
-                {{ comment.body|linebreaks }}
-
-                {% for reply in comment.replies.all %}
-                    <p class="info">
+        {% for reply in comment.replies.all %}
+                    <p >
                         {{ reply.name }}|{{reply.created }}
                     </p>
                     <li>{{reply.body}}</li>
-                {% endfor %}
-
-                <h5>Reply</h5>
+        {% endfor %}
+        
+        <h5>Reply</h5>
                 <form action="." method="POST">
                     {{ comment_form.as_p }}
                     {% csrf_token %}
@@ -77,7 +53,22 @@
                     <input type="hidden" name="parent_id" value="{{ comment.id }}">
                     <input type="submit" value="Reply">
                 </form>
-            </div>
-        {% endfor %}
+    {% empty %}
+        <p>There are no comments yet.</p>
+    {% endfor %}
+
+    {% if new_comment %}
+        <h2>Your comment has been added.</h2>
+    {% else %}
+    <br>
+        <h2>Add a new comment</h2>
+        <form method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p>
+                <input type="submit" value="Add comment">
+            </p>
+        </form>
+        
     {% endif %}
 {% endblock %}
